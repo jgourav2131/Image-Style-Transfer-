@@ -1,16 +1,54 @@
-The main goal of project is to combine two images and produce new image. The combination works in slightly different way i.e., we combine the style of one image with the content of other image. First we take the image from which we want to extract content usually called content image and take another image from which the style is to be extracted usually called style image.
+# Neural Style Transfer with VGG19
 
-Convolutional Neural Networks are a type of neural networks which are used widely in Image classification and recongnition. A CNN architecture called VGG19 has been used in this project. The starting layers in this architecture extract the basic features and shapes and later layers will extract more complex image patterns. So for the output image we will take the content from later layers of CNN. For extracting the style of image, we take the correlations between different layers using Gram Matrix
+## Overview
 
-Initially, we take any random image as target(or taking the content image would be useful) and compute the Content loss and Style loss and decreasing these losses we would reach the perfect target image that has the style of one image and content of other image. For more learning checkout the links below.
+Neural Style Transfer is an exciting application of deep learning that combines the style of one image with the content of another, maintaining the original content's structure. This project uses the VGG19 model, pre-trained on the ImageNet dataset, to perform style transfer.
 
-CPU/GPU: The notebook has been ran on Kaggle GPU T4 x 20.
+The process involves using a convolutional neural network (CNN) to separate and recombine content and style of images. The VGG19 model, known for its effectiveness in image classification, is leveraged here for extracting features that represent style and content separately. The goal is to modify the content image in such a way that its content remains recognizable while the style mimics that of another image.
 
-DATASET: I have used the 'best artwork of all time' dataset available on kaggle to extract the styles. This dataset consistes of many styles to choose from.
+## Implementation Details
 
-Languages or Frameworks Used
-Python: language
-NumPy: library for numerical calculations
-Matplotlib: library for data visualisation
-Pytorch: a deep learning framework by Facebook AI Research Team for building neural networks
-torchvision: package consists of popular datasets, model architectures, and common image transformations for computer vision
+### Setup and Preprocessing
+
+- **Libraries Used**: The project utilizes PyTorch for building and manipulating the CNN model, NumPy for handling arrays, Matplotlib for visualization, and PIL for image operations.
+- **Model Configuration**: We used the VGG19 model's features for extracting image features, freezing its parameters to avoid updates during the optimization process.
+- **Device Configuration**: Computations are performed on a GPU if available, ensuring faster processing times.
+
+### Image Loading and Transformation
+
+- **Image Loading**: Images are loaded and transformed to match the input requirements of the VGG19 model. This includes resizing, tensor conversion, and normalization.
+- **Target Image Initialization**: The content image is cloned and used as the starting point for optimization, with gradients enabled to allow for updates.
+
+### Feature Extraction and Style Representation
+
+- **Feature Extraction**: Select layers of the VGG19 model are used to extract features that represent the content and style of the images.
+- **Style Representation**: A Gram matrix is calculated for each style layer to capture the style patterns.
+
+### Optimization Process
+
+- **Loss Calculation**: The total loss consists of a content loss, measuring how much content is retained, and a style loss, quantifying how closely the style matches the target style image.
+- **Weights**: The content and style losses are weighted to balance their contributions to the total loss.
+- **Optimizer**: The Adam optimizer is used to iteratively update the target image by minimizing the total loss.
+
+### Iterative Style Transfer
+
+- **Iterations**: The optimization runs for a specified number of steps, with the evolving target image displayed periodically to visualize the style transfer progress.
+
+## Results
+
+The style transfer successfully blends the style of the specified artwork with the content of the given photograph. The optimization process demonstrates the target image's gradual transformation, visually combining the essence of both input images.
+
+### Content Image
+![Content Image](URL_TO_YOUR_CONTENT_IMAGE)
+
+### Style Image
+![Style Image](URL_TO_YOUR_STYLE_IMAGE)
+
+### Final Stylized Output
+![Final Stylized Output](URL_TO_YOUR_FINAL_STYLIZED_OUTPUT)
+
+## Conclusion
+
+This project illustrates the power of neural networks in the field of art, showcasing how deep learning can be used to blend the style of one image with the content of another. Through the use of a pre-trained VGG19 model and a carefully designed optimization process, we've created a visually appealing fusion of two images. Future work could explore variations in layer selection, weight adjustments, and optimization techniques to further refine the output and achieve even more impressive results.
+
+**Note**: The images included in this document provide a visual comparison of the original content and style images with the final stylized output, demonstrating the effectiveness of the neural style transfer technique.
